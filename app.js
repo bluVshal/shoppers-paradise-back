@@ -1,18 +1,14 @@
 const express = require('express');
 const app = express();
-const router = express.Router();
+const connection = require('./sql/sql');
+const router = require('./routes/routes');
 
-router.get('/', (req, res) => {
-    res.send('Hello World, This is the backend part');
+connection.connect();
+
+connection.query("select * from products", function(error, results){
+    console.log("query response is ", results);
 });
-
-router.get('/products', (req,res) =>{
-    res.send('Products');
-})
-
-router.get('/admin', (req,res) =>{
-    res.send('Admin');
-})
+connection.end();
 
 app.use('/', router);
 
